@@ -3,6 +3,7 @@
 class Workout {
   date = new Date();
   id = (Date.now() + '').slice(-10); //let a library create ID
+  clicks = 0;
   constructor(coords, distance, duration) {
     this.coords = coords; // [lat,lng]
     this.distance = distance; // in km
@@ -15,6 +16,9 @@ class Workout {
     const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
     // prettier-ignore
     this.description = `${this.type[0].toUpperCase()}${this.type.slice(1)} on ${months[this.date.getMonth()]} ${this.date.getDate()}`;
+  }
+  click() {
+    this.clicks++;
   }
 }
 
@@ -159,11 +163,13 @@ class App {
     console.log(this.#workouts);
 
     // render workout on map as marker
-    this._renderWorkout(workout);
     this._renderWorkoutMarker(workout);
     // render workout on list
+    this._renderWorkout(workout);
     // hide form and clear input fields
     this._hideWorkoutForm();
+    //Set Local storage to all workouts
+    this._setLocalStorage();
   }
 
   _renderWorkoutMarker(workout) {
@@ -250,7 +256,10 @@ class App {
         duration: 1,
       },
     });
+    workout.click();
   }
+
+  _setLocalStorage() {}
 }
 
 const form = document.querySelector('.form');
