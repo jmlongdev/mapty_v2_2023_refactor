@@ -17,9 +17,9 @@ class Workout {
     // prettier-ignore
     this.description = `${this.type[0].toUpperCase()}${this.type.slice(1)} on ${months[this.date.getMonth()]} ${this.date.getDate()}`;
   }
-  click() {
-    this.clicks++;
-  }
+  // click() {
+  //   this.clicks++;
+  // }
 }
 
 class Running extends Workout {
@@ -99,6 +99,9 @@ class App {
 
     // Handles clicks on map
     this.#map.on('click', this._showForm.bind(this));
+    this.#workouts.forEach(workout => {
+      this._renderWorkoutMarker(workout);
+    });
   }
 
   _showForm(mapE) {
@@ -279,6 +282,11 @@ class App {
       // console.log(workout);
     });
   }
+
+  reset() {
+    localStorage.removeItem('workouts');
+    location.reload();
+  }
 }
 
 const form = document.querySelector('.form');
@@ -290,3 +298,21 @@ const inputCadence = document.querySelector('.form__input--cadence');
 const inputElevation = document.querySelector('.form__input--elevation');
 
 const app = new App();
+
+//Things to add
+
+/**
+ * Ability to Edit a workout
+ * Ability to Delete a workout
+ * Ability to Delete all workouts
+ *
+ * Ability to sort workouts - refer to bankist app
+ * Re-build Running and Cycling objects coming from localStorage
+ * Create more realistic error and confirmation messages
+ *
+ *
+ * Ability to position map to show all workouts
+ * Ability to draw lines and shapes instead of just points
+ * Geocode location from coodinates ("Run in Faro, Portugal") Async
+ * Display weatherdata for workout time and place Async
+ */
