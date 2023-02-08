@@ -13,7 +13,8 @@ const inputElevation = document.querySelector('.form__input--elevation');
 const inputLap = document.querySelector('.form__input--lap');
 const inputLift = document.querySelector('.form__input--lift');
 const resetButton = document.querySelector('.reset__btn');
-const trashCan = document.querySelector('.trash_icon');
+
+const testBtn = document.querySelector('.test__btn');
 
 // Application Architecture
 class App {
@@ -34,7 +35,7 @@ class App {
     inputType.addEventListener('change', this._toggleTypeField.bind(this));
     containerWorkouts.addEventListener('click', this._moveToPopup.bind(this));
     resetButton.addEventListener('click', this.reset.bind(this));
-    trashCan.addEventListener('click', this.log.bind(this));
+    // trashCan.addEventListener('click', this.log.bind(this));
   }
 
   // Gets the coordinates of your location
@@ -213,8 +214,9 @@ class App {
     // HTML markup
     let html = `
       <li class="workout workout--${workout.type}" data-id="${workout.id}">
-        <h2 class="workout__title">${workout.description}</h2>
-        <span class="delete trash_icon"><i class="fas fa-trash"></i></span>
+        <h2 class="workout__title">${
+          workout.description
+        }<span id="delete" class="delete__btn"><i class="fas fa-trash"></i></span></h2>
         <div class="workout__details">
           <span class="workout__icon">${
             workout.type === 'running'
@@ -297,9 +299,26 @@ class App {
     form.insertAdjacentHTML('afterend', html);
   }
 
+  _deleteWorkout(e) {
+    const trashCan = document.getElementById('delete');
+    console.log(trashCan);
+    trashCan.addEventListener('click', () => {
+      console.log(click);
+    });
+    //prettier-ignore
+    const workoutElement = e.target.closest('.workout');
+    //prettier-ignore
+    const deleteBtn = e.target.closest('.workouts').querySelector('.delete__btn');
+
+    if (!deleteBtn) return;
+    const workout = this.#workouts.find(
+      workout => workout.id === workoutElement.dataset.id
+    );
+    console.log(workout);
+  }
   _moveToPopup(e) {
     const workoutElement = e.target.closest('.workout');
-
+    console.log(workoutElement);
     if (!workoutElement) return;
     const workout = this.#workouts.find(
       workout => workout.id === workoutElement.dataset.id
@@ -332,17 +351,9 @@ class App {
   }
 
   reset() {
-    localStorage.removeItem('workouts');
-    location.reload();
-  }
-
-  log(e) {
-    const deleteBtn = e.target.closest('delete');
-    if (!deleteBtn) return;
-    const del = this.#workouts.find(
-      workout => workout.id === deleteBtn.dataset.id
-    );
-    console.log(del);
+    // localStorage.removeItem('workouts');
+    // location.reload();
+    console.log('click');
   }
 }
 
