@@ -13,6 +13,8 @@ const inputElevation = document.querySelector('.form__input--elevation');
 const inputLap = document.querySelector('.form__input--lap');
 const inputLift = document.querySelector('.form__input--lift');
 const resetButton = document.querySelector('.reset__btn');
+const trashCan = document.querySelector('.trash_icon');
+
 // Application Architecture
 class App {
   #map;
@@ -23,13 +25,16 @@ class App {
   constructor() {
     // get users positions
     this._getPosition();
+
     // Get data from localstorage
     this._getLocalStorage();
+
     // Attach event handlers
     form.addEventListener('submit', this._newWorkout.bind(this));
     inputType.addEventListener('change', this._toggleTypeField.bind(this));
     containerWorkouts.addEventListener('click', this._moveToPopup.bind(this));
     resetButton.addEventListener('click', this.reset.bind(this));
+    trashCan.addEventListener('click', this.log.bind(this));
   }
 
   // Gets the coordinates of your location
@@ -209,6 +214,7 @@ class App {
     let html = `
       <li class="workout workout--${workout.type}" data-id="${workout.id}">
         <h2 class="workout__title">${workout.description}</h2>
+        <span class="delete trash_icon"><i class="fas fa-trash"></i></span>
         <div class="workout__details">
           <span class="workout__icon">${
             workout.type === 'running'
@@ -328,6 +334,15 @@ class App {
   reset() {
     localStorage.removeItem('workouts');
     location.reload();
+  }
+
+  log(e) {
+    const deleteBtn = e.target.closest('delete');
+    if (!deleteBtn) return;
+    const del = this.#workouts.find(
+      workout => workout.id === deleteBtn.dataset.id
+    );
+    console.log(del);
   }
 }
 

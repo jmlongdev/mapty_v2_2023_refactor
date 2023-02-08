@@ -13,7 +13,7 @@ const app = new App();
 /**
  * Ability to Edit a workout
  * Ability to Delete a workout
- * Ability to Delete all workouts
+ * Ability to Delete all workouts ✅
  *
  * Ability to sort workouts - refer to bankist app
  * Re-build Running and Cycling objects coming from localStorage
