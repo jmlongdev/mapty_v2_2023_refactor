@@ -40,15 +40,67 @@
       <div class="menu">
         <ul class="menu__options">
           <li class="menu__option menu__option--show">
-            <a href="#" class="menu__link">I</a>
-            <span>Show All</span>
+            <a class="menu__link" href="#">
+              <svg class="menu__icon">
+                <use xlink:href="img/sprite.svg#icon-eye"></use>
+              </svg>
+              <span>Show All</span>
+            </a>
           </li>
           <li class="menu__option menu__option--delete">
-            <a href="#" class="menu__link">D</a>
-            <span>Delete All</span>
+            <a class="menu__link" href="#">
+              <svg class="menu__icon">
+                <use xlink:href="img/sprite.svg#icon-squared-cross"></use>
+              </svg>
+              <span>Delete All</span>
+            </a>
           </li>
           <li class="menu__option menu__option--sort">
-            <a href="#" class="menu__link"></a>
+            <a class="menu__link" href="#">
+              <svg class="menu__icon">
+                <use
+                  xlink:href="img/sprite.svg#icon-arrow-with-circle-down"
+                ></use>
+              </svg>
+              <span>Sort (<em id="sort-choice">date</em>)</span>
+            </a>
+            <div class="menu__menu-sort menu__menu-sort--hidden">
+              <ul class="menu__menu-sort-options">
+                <li>
+                  <a
+                    class="menu__menu-sort-option menu__menu-sort-option--date"
+                    href="#"
+                  >
+                    <svg class="menu__menu-sort-icon">
+                      <use xlink:href="img/sprite.svg#icon-calendar"></use>
+                    </svg>
+                    Sort by date
+                  </a>
+                </li>
+                <li>
+                  <a
+                    class="menu__menu-sort-option menu__menu-sort-option--distance"
+                    href="#"
+                  >
+                    <svg class="menu__menu-sort-icon">
+                      <use xlink:href="img/sprite.svg#icon-line-graph"></use>
+                    </svg>
+                    Sort by distance
+                  </a>
+                </li>
+                <li>
+                  <a
+                    class="menu__menu-sort-option menu__menu-sort-option--duration"
+                    href="#"
+                  >
+                    <svg class="menu__menu-sort-icon">
+                      <use xlink:href="img/sprite.svg#icon-stopwatch"></use>
+                    </svg>
+                    Sort by duration
+                  </a>
+                </li>
+              </ul>
+            </div>
           </li>
         </ul>
       </div>
