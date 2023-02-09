@@ -12,7 +12,7 @@ const app = new App();
 
 /**
  * Ability to Edit a workout
- * Ability to Delete a workout
+ * Ability to Delete a workout ✅
  * Ability to Delete all workouts ✅
  *
  * Ability to sort workouts - refer to bankist app

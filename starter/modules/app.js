@@ -13,8 +13,8 @@ const inputElevation = document.querySelector('.form__input--elevation');
 const inputLap = document.querySelector('.form__input--lap');
 const inputLift = document.querySelector('.form__input--lift');
 const resetButton = document.querySelector('.reset__btn');
-
-const testBtn = document.querySelector('.test__btn');
+// const testBtn = document.querySelector('.testBtn');
+let trashCan;
 
 // Application Architecture
 class App {
@@ -35,7 +35,7 @@ class App {
     inputType.addEventListener('change', this._toggleTypeField.bind(this));
     containerWorkouts.addEventListener('click', this._moveToPopup.bind(this));
     resetButton.addEventListener('click', this.reset.bind(this));
-    // trashCan.addEventListener('click', this.log.bind(this));
+    // testBtn.addEventListener('click', this._deleteWorkout.bind(this));
   }
 
   // Gets the coordinates of your location
@@ -214,9 +214,17 @@ class App {
     // HTML markup
     let html = `
       <li class="workout workout--${workout.type}" data-id="${workout.id}">
-        <h2 class="workout__title">${
-          workout.description
-        }<span id="delete" class="delete__btn"><i class="fas fa-trash"></i></span></h2>
+        <h2 class="workout__title">
+          ${workout.description}
+          <span id="delete" class="delete__btn">  
+            <i class="fas fa-trash"></i>
+          </span>
+        </h2>
+        <svg class="workout__menu-trigger workout__menu-icons">
+          <use
+            xlink:href="img/sprite.svg#icon-dots-three-horizontal"
+          ></use>
+        </svg>
         <div class="workout__details">
           <span class="workout__icon">${
             workout.type === 'running'
@@ -240,7 +248,23 @@ class App {
           <span class="workout__unit">min</span>
         </div>
     `;
-
+    /** Refactoring of the html ---
+     * <div>
+     * <span class="workout__value">
+     * ${
+     * workout.type === 'running'
+     * ? workout.pace.toFixed(1)
+     * : workout.type === 'cycling'
+     * ? workout.speed.toFixed(1)
+     * : workout.type === 'swimming'
+     * ? workout.laps
+     * : ''
+     * }
+     * </span>
+     * <div>
+     * <span class="workout__unit">min/km</span>
+     * </div>
+     */
     if (workout.type === 'running') {
       html += `
         <div class="workout__details">
@@ -297,33 +321,38 @@ class App {
       </li>
 `;
     form.insertAdjacentHTML('afterend', html);
+    let trashCan = document.getElementById('delete');
+    // console.log(trashCan);
+    trashCan.addEventListener('click', this._deleteWorkout.bind(this));
   }
 
+  // Hacky way but works
   _deleteWorkout(e) {
-    const trashCan = document.getElementById('delete');
-    console.log(trashCan);
-    trashCan.addEventListener('click', () => {
-      console.log(click);
-    });
     //prettier-ignore
     const workoutElement = e.target.closest('.workout');
-    //prettier-ignore
-    const deleteBtn = e.target.closest('.workouts').querySelector('.delete__btn');
-
-    if (!deleteBtn) return;
-    const workout = this.#workouts.find(
+    // Gets the index of the workout to delete
+    const index = this.#workouts.findIndex(
       workout => workout.id === workoutElement.dataset.id
     );
-    console.log(workout);
+    this.#workouts.splice(index, 1);
+    if (this.#workouts.length !== 0) {
+      this._setLocalStorage();
+      location.reload();
+    } else {
+      localStorage.removeItem('workouts');
+      location.reload();
+    }
+    console.log(this.#workouts);
   }
   _moveToPopup(e) {
     const workoutElement = e.target.closest('.workout');
-    console.log(workoutElement);
     if (!workoutElement) return;
     const workout = this.#workouts.find(
       workout => workout.id === workoutElement.dataset.id
     );
-
+    console.log(workout);
+    if (!workout) return;
+    if (!this.#map) return;
     this.#map.setView(workout.coords, this.#mapZoom, {
       animate: true,
       pan: {
@@ -339,20 +368,16 @@ class App {
 
   _getLocalStorage() {
     const data = JSON.parse(localStorage.getItem('workouts'));
-
     if (!data) return;
-
     this.#workouts = data;
-
     this.#workouts.forEach(workout => {
       this._renderWorkout(workout);
-      // console.log(workout);
     });
   }
 
   reset() {
-    // localStorage.removeItem('workouts');
-    // location.reload();
+    localStorage.removeItem('workouts');
+    location.reload();
     console.log('click');
   }
 }
