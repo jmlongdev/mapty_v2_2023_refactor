@@ -209,7 +209,7 @@ class App {
       )
       .openPopup();
   }
-
+  //  Refactoring of the html ---
   _renderWorkout(workout) {
     // HTML markup
     let html = `
@@ -220,11 +220,7 @@ class App {
             <i class="fas fa-trash"></i>
           </span>
         </h2>
-        <svg class="workout__menu-trigger workout__menu-icons">
-          <use
-            xlink:href="img/sprite.svg#icon-dots-three-horizontal"
-          ></use>
-        </svg>
+       
         <div class="workout__details">
           <span class="workout__icon">${
             workout.type === 'running'
@@ -247,79 +243,66 @@ class App {
           <span class="workout__value">${workout.duration}</span>
           <span class="workout__unit">min</span>
         </div>
-    `;
-    /** Refactoring of the html ---
-     * <div>
-     * <span class="workout__value">
-     * ${
-     * workout.type === 'running'
-     * ? workout.pace.toFixed(1)
-     * : workout.type === 'cycling'
-     * ? workout.speed.toFixed(1)
-     * : workout.type === 'swimming'
-     * ? workout.laps
-     * : ''
-     * }
-     * </span>
-     * <div>
-     * <span class="workout__unit">min/km</span>
-     * </div>
-     */
-    if (workout.type === 'running') {
-      html += `
+    
+   
+
+    
         <div class="workout__details">
           <span class="workout__icon">⚡️</span>
-          <span class="workout__value">${workout.pace.toFixed(1)}</span>
-          <span class="workout__unit">min/km</span>
+          <span class="workout__value">${
+            workout.type === 'running'
+              ? workout.pace.toFixed(1)
+              : workout.type === 'cycling'
+              ? workout.speed.toFixed(1)
+              : workout.type === 'swimming'
+              ? workout.laps
+              : ''
+          }
+         </span>
+          <span class="workout__unit">${
+            workout.type === 'running'
+              ? 'min/km'
+              : workout.type === 'cycling'
+              ? 'km/h'
+              : workout.type === 'swimming'
+              ? 'laps'
+              : ''
+          }
+      </span>
         </div>
         <div class="workout__details">
-          <span class="workout__icon">🦶🏼</span>
-          <span class="workout__value">${workout.cadence}</span>
-          <span class="workout__unit">spm</span>
+          <span class="workout__icon">${
+            workout.type === 'running'
+              ? '🦶🏼'
+              : workout.type === 'cycling'
+              ? '⛰'
+              : workout.type === 'swimming'
+              ? '🔁'
+              : ''
+          }
+          </span>
+          <span class="workout__value">${
+            workout.type === 'running'
+              ? workout.cadence
+              : workout.type === 'cycling'
+              ? workout.elevation
+              : workout.type === 'swimming'
+              ? workout.pace.toFixed(1)
+              : ''
+          }
+          </span>
+          <span class="workout__unit">${
+            workout.type === 'running'
+              ? 'spm'
+              : workout.type === 'cycling'
+              ? 'm'
+              : workout.type === 'swimming'
+              ? 'm/min'
+              : ''
+          }</span>
+      
         </div>
       </li>`;
-    }
-    if (workout.type === 'cycling') {
-      html += `
-        <div class="workout__details">
-          <span class="workout__icon">⚡️</span>
-          <span class="workout__value">${workout.speed.toFixed(1)}</span>
-          <span class="workout__unit">km/h</span>
-        </div>
-        <div class="workout__details">
-          <span class="workout__icon">⛰</span>
-          <span class="workout__value">${workout.elevation}</span>
-          <span class="workout__unit">m</span>
-        </div>
-      </li>`;
-    }
-    if (workout.type === 'swimming')
-      html += `
-        <div class="workout__details">
-          <span class="workout__icon">🔁</span>
-          <span class="workout__value">${workout.laps}</span>
-          <span class="workout__unit">laps</span>
-        </div>
-        <div class="workout__details">
-            <span class="workout__icon">🏊🏻‍♀️</span>
-            <span class="workout__value">${workout.pace.toFixed(1)}</span>
-            <span class="workout__unit">m/min</span>
-        </div>
-      </li>
-`;
-    if (workout.type === 'weight_lifting')
-      html += `
-        <div class="workout__details">
-          <span class="workout__icon">🔁</span>
-          <span class="workout__value">${workout.sets}</span>
-          <span class="workout__unit">laps</span>
-        </div>
-        <div class="workout__details">
-            <span class="workout__icon">🏋️‍♀️</span>
-            <span class="workout__value">${workout.reps}</span>
-        </div>
-      </li>
-`;
     form.insertAdjacentHTML('afterend', html);
     let trashCan = document.getElementById('delete');
     // console.log(trashCan);

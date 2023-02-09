@@ -29,9 +29,30 @@
     ></script>
 
     <script defer type="module" src="modules/app.js"></script>
-    <title>mapty // Map your workouts</title>
+    <title>Workout Tracker - Track your workouts</title>
   </head>
   <body>
+    <!-- Refactoring HTML -->
+    <main>
+      <div class="side">
+        <div class="logo"></div>
+      </div>
+      <div class="menu">
+        <ul class="menu__options">
+          <li class="menu__option menu__option--show">
+            <a href="#" class="menu__link">I</a>
+            <span>Show All</span>
+          </li>
+          <li class="menu__option menu__option--delete">
+            <a href="#" class="menu__link">D</a>
+            <span>Delete All</span>
+          </li>
+          <li class="menu__option menu__option--sort">
+            <a href="#" class="menu__link"></a>
+          </li>
+        </ul>
+      </div>
+    </main>
     <div class="sidebar">
       <img src="logo.png" alt="Logo" class="logo" />
       <button class="reset__btn">Reset</button>
@@ -45,7 +66,7 @@
               <option value="running">Running</option>
               <option value="cycling">Cycling</option>
               <option value="swimming">Swimming</option>
-              <option value="swimming">Weight Lifting</option>
+              <!-- <option value="swimming">Weight Lifting</option> -->
             </select>
           </div>
           <div class="form__row">
@@ -88,15 +109,23 @@
       <p class="copyright">
         &copy; Copyright by
         <a
+          class="linked-in"
+          target="_blank"
+          href="https://www.linkedin.com/in/max-long-jr-dev-0403aa239"
+          >Max Long</a
+        >
+        - This project is a refactored version of "Mapty" App by
+        <a
           class="twitter-link"
           target="_blank"
           href="https://twitter.com/jonasschmedtman"
           >Jonas Schmedtmann</a
-        >. Use for learning or your portfolio. Don't use to teach. Don't claim
-        as your own.
+        >.
       </p>
     </div>
 
     <div id="map"></div>
   </body>
 </html>
+
+<!--  -->
